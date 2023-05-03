@@ -14,7 +14,7 @@ const qualitiesSlice = createSlice({
         qualitiesRequested: (state) => {
             state.isLoading = true;
         },
-        qualitiesReceved: (state, action) => {
+        qualitiesReceived: (state, action) => {
             state.entities = action.payload;
             state.lastFetch = Date.now();
             state.isLoading = false;
@@ -27,7 +27,7 @@ const qualitiesSlice = createSlice({
 });
 
 const { reducer: qualitiesReducer, actions } = qualitiesSlice;
-const { qualitiesRequested, qualitiesReceved, qualitiesRequestFiled } = actions;
+const { qualitiesRequested, qualitiesReceived, qualitiesRequestFiled } = actions;
 
 export const loadQualitiesList = () => async (dispatch, getState) => {
     const { lastFetch } = getState().qualities;
@@ -35,7 +35,7 @@ export const loadQualitiesList = () => async (dispatch, getState) => {
         dispatch(qualitiesRequested());
         try {
             const { content } = await qualityService.fetchAll();
-            dispatch(qualitiesReceved(content));
+            dispatch(qualitiesReceived(content));
         } catch (error) {
             dispatch(qualitiesRequestFiled(error.message));
         }

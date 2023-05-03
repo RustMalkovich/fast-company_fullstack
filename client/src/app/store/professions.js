@@ -14,7 +14,7 @@ const professionsSlice = createSlice({
         professionsRequested: (state) => {
             state.isLoading = true;
         },
-        professionsReceved: (state, action) => {
+        professionsReceived: (state, action) => {
             state.entities = action.payload;
             state.lastFetch = Date.now();
             state.isLoading = false;
@@ -27,17 +27,16 @@ const professionsSlice = createSlice({
 });
 
 const { reducer: professionsReducer, actions } = professionsSlice;
-const { professionsRequested, professionsReceved, professionsRequestFiled } =
+const { professionsRequested, professionsReceived, professionsRequestFiled } =
     actions;
 
 export const loadProfessionsList = () => async (dispatch, getState) => {
     const { lastFetch } = getState().professions;
     if (isOutdated(lastFetch)) {
-        console.log("lastFetch", lastFetch);
         dispatch(professionsRequested());
         try {
             const { content } = await professionService.get();
-            dispatch(professionsReceved(content));
+            dispatch(professionsReceived(content));
         } catch (error) {
             dispatch(professionsRequestFiled(error.message));
         }

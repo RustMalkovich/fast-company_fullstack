@@ -14,7 +14,7 @@ router
       res.send(list);
     } catch (error) {
       res.status(500).json({
-        message: "На сервере произошла ошибкаю Попробуйте позже",
+        message: "На сервере произошла ошибка. Попробуйте позже",
       });
     }
   })
@@ -27,7 +27,7 @@ router
       res.status(201).send(newComment); // status 201, потому что он был создан
     } catch (error) {
       res.status(500).json({
-        message: "На сервере произошла ошибкаю Попробуйте позже",
+        message: "На сервере произошла ошибка. Попробуйте позже",
       });
     }
   });
@@ -39,14 +39,15 @@ router.delete("/:commentId", auth, async (req, res) => {
     const removedComment = await Comment.findById(commentId);
 
     if (removedComment.userId.toString() === req.user._id) {
-      await removedComment.remove();
+      await removedComment.deleteOne(); // remove() устарел
       return res.send(null);
     } else {
       res.status(401).json({ message: "Unauthorized" });
     }
   } catch (error) {
+    console.log(error.message);
     res.status(500).json({
-      message: "На сервере произошла ошибкаю Попробуйте позже",
+      message: "На сервере произошла ошибка. Попробуйте позже",
     });
   }
 });

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { validator } from "../../utils/ validator";
+import { validator } from "../../utils/validator";
 import TextField from "../common/form/textField";
 import SelectField from "../common/form/selectField";
 import RadioField from "../common/form/radio.Field";
@@ -41,7 +41,7 @@ const RegisterForm = () => {
             [target.name]: target.value
         }));
     };
-    const validatorConfog = {
+    const validatorConfig = {
         email: {
             isRequired: {
                 message: "Электронная почта обязательна для заполнения"
@@ -90,7 +90,7 @@ const RegisterForm = () => {
         validate();
     }, [data]);
     const validate = () => {
-        const errors = validator(data, validatorConfog);
+        const errors = validator(data, validatorConfig);
         setErrors(errors);
         return Object.keys(errors).length === 0;
     };

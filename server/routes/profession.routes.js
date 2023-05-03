@@ -8,7 +8,7 @@ router.get("/", async (req, res) => {
     res.status(200).send(list)
   } catch (error) {
     res.status(500).json({
-      message: "На сервере произошла ошибкаю Попробуйте позже",
+      message: "На сервере произошла ошибка. Попробуйте позже",
     });
   }
 });
